@@ -1,0 +1,73 @@
+### remove old versions if any exists
+
+sudo apt-get remove docker docker-engine docker.io
+
+
+### Before you install Docker CE for the first time on a new host machine, you need to set up the Docker repository. 
+###Afterward, you can install and update Docker from the repository.
+###
+### to Set up the repository
+
+
+sudo apt-get update
+
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+
+sudo apt-key fingerprint 0EBFCD88
+
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+
+### Install Docker CE
+
+
+sudo apt-get update
+
+sudo apt-get install docker-ce
+
+
+### add system user to docker group
+
+
+sudo usermod -aG docker ubuntu
+
+
+### for uninstall
+
+
+sudo apt-get purge docker-ce
+
+sudo rm -rf /var/lib/docker
+
+
+### docker compose installation
+
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+
+
+
+
+
+
+
+
+
