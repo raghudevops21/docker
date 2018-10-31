@@ -1,0 +1,103 @@
+docker compose to create multiple containers and start and stop all services with 
+a single command (docker compose up & down )
+we use yaml file to configure application services ( docker-compose.yml )
+we can scale up selected services when required.
+
+docker-compose --version
+install: sudo apt-get install docker-compose
+
+touch docker-compose.yml ==> vi docker-compose.yml
+==================================================
+
+ version: '2.0'
+
+ services:
+
+   web:
+     image: nginx
+     ports:
+      - 9090:80
+
+   database:
+     image: mysql
+     ports:
+     - 9091:3306
+     environment:
+     - MYSQL_ROOT_PASSWORD=password
+     - MYSQL_USER=user
+     - MYSQL_PASSWORD=password
+     - MYSQL_DATABASE=demodb
+
+==================================================
+docker-compose config (to validate of file)
+
+docker-compose up -d (to run the yml file and to create the containers and applications)
+
+docker-compose down (stop the containers)
+
+docker-compose up -d --scale database=4
+
+
+==================================================
+DOCKER SWARM
+==================================================
+
+Docker swarm is a group of machines that are running Docker and joined into a cluster.
+docker swarm is a tool for container orchestration.
+
+ex: if u have 100 containers --> u need to do -->
+
+1. each container health check
+2. all containers are up
+3. scalling the containers up or down depending on the load.
+4. adding updates/changes to all the containers.
+
+Ochestration ==> managing and controlling multiple docker containers as a single service
+Tools available ==> Docker Swarm + Kubernetes + Apache Mesos
+
+Swarm manager --> worker1 + worker2 + worker3
+
+nginx manager --> nginx1 + nginx2 + nginx3
+
+
+swarm install:
+=============
+
+base=https://github.com/docker/machine/releases/download/v0.14.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+
+docker-machine version
+
+docker-machine create --driver virtualbox manager1
+
+if get error:
+
+sudo apt install linuxbrew-wrapper
+
+brew cask install virtualbox;
+
+
+base image:
+===========
+
+1. An image that has no parent is a base image.
+
+2. A Dockerfile with no FROM directive has no parent image, and is called a base image.
+
+3. A parent image is the image that your image is based on. It refers to the contents of the FROM directive in the Dockerfile. Each subsequent declaration in the Dockerfile modifies this parent image. Most Dockerfiles start from a parent image, rather than a base image. However, the terms are sometimes used interchangeably.
+
+4. A base image either has no FROM line in its Dockerfile, or has FROM scratch.
+
+
+
+
+
+
+
+
+
+
+
+
+
